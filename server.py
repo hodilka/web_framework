@@ -130,7 +130,8 @@ class MyHTTPServer:
           args_assoc[key] = val
         print("[PATH@]", args_assoc) 
         try:
-          body_of_the_sendback = getattr(Controller, req.path.strip("/") + '_get')(req, args_assoc)
+          contr = Controller()
+          body_of_the_sendback = getattr(contr, req.path.strip("/") + '_get')(req, args_assoc)
           print(body_of_the_sendback)
         except:
           print("\n[SERVER] cant have body of the sendback")
