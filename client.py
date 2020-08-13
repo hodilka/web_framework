@@ -33,7 +33,7 @@ def inputting_msg():
         else:
             send(msg)
 
-send("POST /index HTTP/1.1\nHost: 127.0.0.1\nAccept: text/html\nUser-Agent: Mozilla/5.0\nContent-Type: application/x-www-form-urlencoded\nContent-Length: 13\nsay=Hi&to=Mom")
+send("GET /index HTTP/1.1\nHost: 127.0.0.1\nAccept: text/html\nUser-Agent: Mozilla/5.0")
 thread = threading.Thread(target=start, args=())
 thread.start()
 inputting_msg()

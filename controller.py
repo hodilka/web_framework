@@ -14,7 +14,7 @@ class Controller:
     def index_get(self, req, msg_assoc = {}):
         print('[SERVER] message recieved: ', msg_assoc)
         self.body_of_the_sendback['body'] = Route.view(req.path.strip("/") + ".html")
-        self.redirect('/')
+        self.redirect('http://127.0.0.1:53210')
         return self.body_of_the_sendback
 
     def redirect(self, url):

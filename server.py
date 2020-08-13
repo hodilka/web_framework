@@ -21,6 +21,7 @@ class Response:
     self.reason = reason
     self.headers = headers
     self.body = body
+    print(self.headers)
 
 class MyHTTPServer:
   MAX_LINE = 64*1024
@@ -144,7 +145,7 @@ class MyHTTPServer:
         else:
           headers = [('Content-Type', contentType),
                     ('Content-Length', len(body)),
-                    ('location', body_of_the_sendback['redirect'])]
+                    ('Location', body_of_the_sendback['redirect'])]
         return Response(200, 'OK', headers, body)
       else:
         #returning image
