@@ -137,8 +137,14 @@ class MyHTTPServer:
                   ('Content-Length', len(body))]
         return Response(200, 'OK', headers, body)
       else:
-        print("[SERVER] image request detected!", image)
-        print("\n[IMAGE PATH]", STATIC_DIR + req.path)
+        image_path = STATIC_DIR + req.path
+        print("\n[IMAGE PATH]", image_path)
+        with open(image_path, "rb") as image:
+          f = image.read()
+          b = bytearray(f)
+          print("[IMAGE] bytearray", b)
+          headers = [('Content-Type', "image/png"), ('Content-Length', len(f))]
+          return Response(200, 'OK', headers, f)
     if req.method in ['Post', 'post', 'POST']:
       msg = req.body
       msg_splitted = msg.split("&")
