@@ -119,14 +119,18 @@ class MyHTTPServer:
   def handle_request(self, req):
     image = True
     if req.method in ['get', 'GET', 'Get']:
-      print(req.headers)
       for key, header in req.headers.items():
         if 'Accept' in key and 'text/html' in header:
           image = False
       if not image:
-        print("[IMAGE] not image", image)
+        args_assoc = {}
+        print("[PATH]", req.query)
+        for key, value in req.query.items():
+          val = "".join(value)
+          args_assoc[key] = val
+        print("[PATH@]", args_assoc) 
         try:
-          body_of_the_sendback = getattr(Controller, req.path.strip("/") + '_get')(req)
+          body_of_the_sendback = getattr(Controller, req.path.strip("/") + '_get')(req, args_assoc)
           print(body_of_the_sendback)
         except:
           print("\n[SERVER] cant have body of the sendback")
@@ -137,6 +141,7 @@ class MyHTTPServer:
                   ('Content-Length', len(body))]
         return Response(200, 'OK', headers, body)
       else:
+        #returning image
         image_path = STATIC_DIR + req.path
         print("\n[IMAGE PATH]", image_path)
         with open(image_path, "rb") as image:
