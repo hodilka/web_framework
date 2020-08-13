@@ -135,10 +135,15 @@ class MyHTTPServer:
         except:
           print("\n[SERVER] cant have body of the sendback")
           return Response(404, 'Not found')
-        body = body_of_the_sendback.encode('utf-8')
+        body = body_of_the_sendback['body'].encode('utf-8')
         contentType = 'text/html; charset=utf-8'
-        headers = [('Content-Type', contentType),
-                  ('Content-Length', len(body))]
+        if not body_of_the_sendback['redirect']:
+          headers = [('Content-Type', contentType),
+                    ('Content-Length', len(body))]
+        else:
+          headers = [('Content-Type', contentType),
+                    ('Content-Length', len(body)),
+                    ('location', body_of_the_sendback['redirect'])]
         return Response(200, 'OK', headers, body)
       else:
         #returning image
